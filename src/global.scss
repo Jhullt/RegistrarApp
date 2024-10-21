@@ -1,0 +1,80 @@
+@import "@ionic/angular/css/core.css";
+@import "@ionic/angular/css/normalize.css";
+@import "@ionic/angular/css/structure.css";
+@import "@ionic/angular/css/typography.css";
+@import "@ionic/angular/css/display.css";
+@import "@ionic/angular/css/padding.css";
+@import "@ionic/angular/css/float-elements.css";
+@import "@ionic/angular/css/text-alignment.css";
+@import "@ionic/angular/css/text-transformation.css";
+@import "@ionic/angular/css/flex-utils.css";
+@import "@ionic/angular/css/palettes/dark.system.css";
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap');
+
+// DISEÑO DE ALERTAS
+.alerta-diseno{
+    --background: var(--cf-sub-fondo) !important;
+}
+
+.alerta-diseno .alert-message {
+    color: var(--letra) !important;
+    font-family: 'Open Sans', sans-serif !important;
+    font-size: 15px !important;
+}
+
+.alerta-diseno .alert-title {
+    color: var(--letra) ;
+    font-weight: bold !important;
+    font-family: 'Open Sans', sans-serif !important;
+    font-size: 15px !important;
+    text-align: center !important;
+}
+
+.alerta-button-diseno{
+    background-color: var(--cf-fondo) !important;
+    color: var(--letra) !important;
+    padding: 10px 20px !important;
+    border-radius: 10px !important;
+    margin: 0px !important;
+}
+
+// MODALES DE SELECT
+
+ion-alert {
+    --background: var(--cf-sub-fondo) !important;
+}
+
+.alert-button{
+    background-color: var(--cf-fondo) !important;
+    color: var(--letra);
+    padding: 10px 20px !important;
+    border-radius: 10px !important;
+}
+
+.alert-button-inner{
+    color: var(--letra);
+}
+
+.alert-button-group{
+    justify-content: center !important;
+}
+.sc-ion-alert-md{
+    color: var(--letra) !important;
+    font-family: 'Open Sans', sans-serif !important;
+    font-size: 14px !important;
+}
+.alert-title{
+    color: var(--letra) !important;
+    font-weight: bold !important;
+    font-family: 'Open Sans', sans-serif !important;
+    font-size: 15px !important;
+}
+.alert-head{
+    text-align: center !important;
+}
+.alert-radio-inner{
+    background-color: var(--letra) !important;
+}
+[aria-checked="true"].sc-ion-alert-md .alert-radio-icon.sc-ion-alert-md {
+    border-color: var(--letra) !important;
+}

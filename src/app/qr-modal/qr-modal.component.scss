@@ -1,0 +1,37 @@
+img {
+    max-width: 100%;
+    height: auto;
+  }
+
+ion-header{
+
+  ion-toolbar{
+    --background: var(--cf-sub-fondo);
+  }
+}
+
+ion-content{
+  --background: var(--cf-fondo);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: calc(100% - 81px);
+  width: 100%;
+}
+
+.contenedor-qr{
+  display: flex;
+  height: calc(100% - 81px);
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+ion-title{
+  color: var(--letra);
+}
+
+ion-button{
+  color: var(--letra);
+}

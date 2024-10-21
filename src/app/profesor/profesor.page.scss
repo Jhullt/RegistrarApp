@@ -1,0 +1,168 @@
+ion-content {
+    --background: var(--cf-fondo);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: calc(100% - 23vh);
+    width: 100%;
+  }
+  
+  ion-tab-bar {
+    --background: var(--cf-sub-fondo);
+    --color: var(--letra);
+    box-shadow: none;
+    border-top: none;
+  }
+  
+  ion-tab-button {
+    color: var(--letra);
+    
+    ion-icon {
+      color: var(--cf-fondo);
+    }
+  }
+  
+ion-tabs{
+  z-index: -1;
+}
+
+  ion-header {
+    --background: var(--cf-sub-fondo);
+    color: var(--letra);
+  }
+  
+  ion-toolbar {
+    --background: var(--cf-sub-fondo);
+  }
+  
+  ion-menu-button {
+    color: var(--cf-fondo);
+  }
+  
+  .contenedor-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+  }
+  
+  .contenedor-icon-usuario {
+    h1 {
+      font-size: 40px;
+      color: var(--cf-fondo);
+    }
+  }
+  
+  .contenedor-datos-usuario {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    h1, h2 {
+      font-size: 15px;
+      margin: 0px;
+      color: var(--letra);
+    }
+  }
+  
+  .contenedor-notificaciones {
+    display: flex;
+  
+    h1 {
+      color: var(--cf-fondo);
+      font-size: 30px;
+    }
+  }
+  
+  .contenedor-icon-user {
+    display: flex;
+    flex-direction: row;
+    column-gap: 10px;
+  }
+  
+  ion-menu {
+    ion-header {
+      --background: var(--cf-sub-fondo);
+      color: var(--letra);
+  
+      ion-toolbar {
+        --background: var(--cf-sub-fondo);
+        --padding-start: 0;
+        --padding-end: 0;
+        display: flex;
+        justify-content: center;
+      }
+  
+      ion-title {
+        text-align: center;
+        width: 100%;
+        color: var(--letra);
+      }
+    }
+  
+    ion-content {
+      --background: var(--cf-fondo);
+  
+      ion-list {
+        display: flex;
+        height: 530px;
+        flex-direction: column;
+        justify-content: space-between;
+        background-color: var(--cf-fondo);
+  
+        ion-item {
+          --background: var(--cf-fondo);
+          --color: var(--letra);
+  
+          ion-icon {
+            color: white;
+          }
+  
+          ion-label {
+            color: var(--letra);
+          }
+        }
+      }
+    }
+  }
+
+  ion-list{
+    background: var(--cf-fondo);
+    margin-bottom: 30px;
+  }
+
+  ion-item{
+    --background: var(--cf-fondo);
+    color: var(--letra);
+  }
+
+  ion-select{
+    --background: var(--cf-fondo);
+  }
+
+  .contenedor-info{
+    background-color: var(--cf-sub-fondo);
+    width: 360px;
+    height: 200px;
+    padding: 20px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 auto;
+  }
+
+  .contenedor-dato{
+    width: 340px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 10px;
+    padding: 10px;
+    border-bottom: 2px solid var(--blanco);
+    h1,h2{
+      color: var(--letra);
+      margin: 0px;
+      font-size: 18px;
+    }
+  }

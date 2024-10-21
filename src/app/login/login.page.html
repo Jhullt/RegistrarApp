@@ -1,0 +1,125 @@
+<ion-content [fullscreen]="true" keyboardShouldPersistTaps="always">
+  <!-- CAMBIAR COLOR -->
+  <div class="contenedor-cambiar-modo-color">
+    <div class="cambiar">
+      <ion-icon src="/assets/{{icono}}.svg" id="tema" (click)="cambiarTema()"></ion-icon>
+    </div>
+  </div>
+  
+  <!-- LOGO -->
+  <div class="contenedor-logo-login">
+    <div class="contenedor-img-logo">
+      <ion-img #logo src="assets/logo.svg" id="logo"></ion-img>
+    </div>
+    <div class="contenedor-letras">
+      <h1>Registrar</h1>
+      <h2>App</h2>
+    </div>
+  </div>
+  
+  <!-- CARTA -->
+  <ion-card #card>
+    <div class="contenedor-inputs">
+      <div class="contenedor-input">
+        <ion-input [(ngModel)]="email" label="Correo" label-placement="floating" fill="outline" placeholder="Ingrese su correo"></ion-input>
+      </div>
+      <div class="contenedor-input">
+        <ion-input [(ngModel)]="clave" label="Contraseña" label-placement="floating" fill="outline" placeholder="Ingrese su contraseña" type="password"></ion-input>
+      </div>
+      <div class="contenedor-button">
+        <ion-button (click)="abrirRegistrarModal()">REGISTRARSE</ion-button>
+      </div>
+    </div>
+    <div class="contenedor-buttons">
+      <div class="contenedor-button">
+        <ion-button (click)="setOpen(true)">RECUPERAR CONTRASEÑA</ion-button>
+      </div>
+      <div class="contenedor-button">
+        <ion-button (click)="login()">INICIAR SESIÓN</ion-button>
+      </div>
+    </div>
+  </ion-card>
+</ion-content>
+
+<ion-modal [isOpen]="isModalOpen">
+  <ng-template>
+    <ion-header>
+      <h1>Recuperar contraseña</h1>
+    </ion-header>
+
+    <ion-content class="ion-padding">
+      <ion-card class="modal-password">
+        <div class="contenedor-modal-datos">
+          <p>Ingresa tu email vinculado a la cuenta y te enviaremos un enlace para restablecer tu contraseña.</p>
+          <div class="contenedor-input">
+            <ion-input type="email" label="Correo" label-placement="floating" fill="outline" [(ngModel)]="email"></ion-input>
+          </div>
+        </div>
+
+        <div class="contenedor-buttons">
+          <div class="contenedor-button">
+            <ion-button (click)="resetPass()">Recuperar</ion-button>
+          </div>
+          <div class="contenedor-button">
+            <ion-button (click)="setOpen(false)">Cancelar</ion-button>
+          </div>
+        </div>
+      </ion-card>
+    </ion-content>
+  </ng-template>
+</ion-modal>
+
+<ion-modal [isOpen]="registrarModal">
+  <ng-template>
+    <ion-header>
+      <h1>Registrarse</h1>
+    </ion-header>
+
+    <ion-content class="ion-padding">
+
+      <ion-card class="modal-registrar-formulario">
+        <div class="contenedor-modal-datos"> 
+          <!-- INICIO FORMULARIO -->
+
+          <!-- EMAIL -->
+          <div class="contenedor-dato-formulario">
+            <div class="contenedor-input">
+              <ion-input [(ngModel)]="email" label="Correo (Obligatorio)" label-placement="floating" fill="outline" placeholder="Introduce tu correo electronico"></ion-input>
+            </div>           
+          </div>
+          <!-- CONTRASEÑA -->
+          <div class="contenedor-dato-formulario">
+            <div class="contenedor-input">
+              <ion-input [(ngModel)]="clave" label="Contraseña (Obligatorio)" label-placement="floating" fill="outline" placeholder="Define tu contraseña de acceso"></ion-input>
+            </div>           
+          </div>
+          <!-- NOMBRE -->
+          <div class="contenedor-dato-formulario">
+            <div class="contenedor-input">
+              <ion-input [(ngModel)]="nombre" label="Nombre completo (Obligatorio)" label-placement="floating" fill="outline" placeholder="Introduce tu nombre completo"></ion-input>
+            </div>           
+          </div>
+          <!-- RUT -->
+          <div class="contenedor-dato-formulario">
+            <div class="contenedor-input">
+              <ion-input [(ngModel)]="rut" label="RUT (Obligatorio)" label-placement="floating" fill="outline" placeholder="Introduce tu RUT"></ion-input>
+            </div>           
+          </div>
+          <!-- SELECTOR DE ROL -->
+          <ion-select [(ngModel)]="rol" label="¿Eres profesor o alumno?" label-placement="floating">
+            <ion-select-option value="alumno">Alumno</ion-select-option>
+            <ion-select-option value="profesor">Profesor</ion-select-option>
+          </ion-select>
+        </div>
+        <div class="contenedor-buttons">
+          <div class="contenedor-button">
+            <ion-button (click)="registrarUsuario()">Registrarse</ion-button>
+          </div>
+          <div class="contenedor-button">
+            <ion-button (click)="cerrarRegistrarModal()">Cancelar</ion-button>
+          </div>
+        </div>
+      </ion-card>
+    </ion-content>
+  </ng-template>
+</ion-modal>

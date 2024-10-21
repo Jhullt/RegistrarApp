@@ -1,0 +1,99 @@
+<ion-menu side="end" contentId="main-content">
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>Opciones</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content class="ion-padding">
+    <ion-list>
+      <ion-item (click)="cambiarTema()">
+        <ion-icon slot="start" name="moon-outline"></ion-icon>
+        <ion-label>{{ tema }}</ion-label>
+      </ion-item>
+      <ion-item (click)="salir()">
+        <ion-icon slot="start" name="log-out-outline"></ion-icon>
+        <ion-label>Salir</ion-label>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-menu>
+
+<ion-content id="main-content" [fullscreen]="true">
+  <ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+      <div class="contenedor-header">
+        <div class="contenedor-icon-user">
+          <div class="contenedor-icon-usuario">
+            <h1><ion-icon name="person-circle-outline"></ion-icon></h1>
+          </div>
+          <div class="contenedor-datos-usuario">
+            <h1>{{ usuarioActual.rut }}</h1> <!-- Muestra el RUT del usuario -->
+            <h2>{{ usuarioActual.nombre }}</h2> <!-- Muestra el nombre del usuario -->            
+          </div>
+        </div>
+        <div class="contenedor-notificaciones">
+          <h1><ion-icon class="icono-notificacion" [name]="iconoNotificacion" (click)="manejarClickNotificaciones()"></ion-icon></h1>
+        </div>   
+      </div>
+    </ion-toolbar>
+  </ion-header>
+
+  <!-- CONTENIDO CENTRO -->
+  <ion-content class="ion-padding">
+    <ion-list>
+      <ion-item>
+        <ion-select label="Día" label-placement="fixed">
+          <ion-select-option value="lunes">Lunes</ion-select-option>
+          <ion-select-option value="martes">Martes</ion-select-option>
+          <ion-select-option value="miercoles">Miércoles</ion-select-option>
+          <ion-select-option value="jueves">Jueves</ion-select-option>
+          <ion-select-option value="viernes">Viernes</ion-select-option>
+          <ion-select-option value="sabado">Sábado</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-select label="Clase" label-placement="fixed">
+          <ion-select-option value="arquitectura">Arquitectura</ion-select-option>
+          <ion-select-option value="estadistica">Estadística</ion-select-option>
+          <ion-select-option value="programacion">Programación</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-select label="Sesión" label-placement="fixed">
+          <ion-select-option value="003D">003D</ion-select-option>
+          <ion-select-option value="004D">004D</ion-select-option>
+          <ion-select-option value="005D">005D</ion-select-option>
+        </ion-select>
+      </ion-item>
+    </ion-list>
+
+    <div class="contenedor-info">
+      <div class="contenedor-dato">
+        <h1>Día</h1>
+        <h2>Lunes</h2>
+      </div>
+      <div class="contenedor-dato">
+        <h1>Clase</h1>
+        <h2>Arquitectura</h2>
+      </div>
+      <div class="contenedor-dato">
+        <h1>Sesión</h1>
+        <h2>003D</h2>
+      </div>
+    </div>
+  </ion-content>
+
+  <ion-tabs>
+    <ion-tab-bar slot="bottom">
+      <ion-tab-button (click)="generarCodigoQR()">
+        <ion-icon name="radio-outline"></ion-icon>
+        Iniciar Asistencia
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
+</ion-content>
