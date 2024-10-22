@@ -1,8 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ModalController, AnimationController, Animation } from '@ionic/angular';
+import { ModalController, AnimationController, Animation, AlertController } from '@ionic/angular';
 import * as QRCode from 'qrcode';
 import { QrModalComponent } from '../qr-modal/qr-modal.component';
+
+interface Clases {
+  [key: string]: {
+    [key: string]: string[];
+  };
+}
 
 @Component({
   selector: 'app-profesor',
@@ -19,10 +25,35 @@ export class ProfesorPage implements OnInit {
 
   usuarioActual: any;
 
+  // Propiedades para manejar selecciones
+  selectedDay: string = '';
+  selectedClass: string = '';
+  availableClasses: string[] = [];
+  availableSections: string[] = [];
+
+  // Definición de las clases
+  clases: Clases = {
+    Programación: {
+      "003": ['Lunes', 'Martes'],
+      "004": ['Lunes', 'Viernes'],
+      "005": ['Martes', 'Miercoles'],
+    },
+    Arquitectura: {
+      "009": ['Lunes'],
+      "001": ['Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes'],
+    },
+    Matemáticas: {
+      "001": ['Jueves'],
+      "003": ['Lunes'],
+      "004": ['Martes'],
+    },
+  };
+
   constructor(
-    private router: Router, 
-    private modalController: ModalController, 
+    private router: Router,
+    private modalController: ModalController,
     private animCtrl: AnimationController,
+    private alertController: AlertController, // Agrega el AlertController aquí
   ) {}
 
   ngOnInit() {
@@ -109,5 +140,59 @@ export class ProfesorPage implements OnInit {
 
   manejarClickNotificaciones() {
     this.detenerAnimacion();
+  }
+
+  onDaySelect(event: any) {
+    this.selectedDay = event.detail.value; // Asignar el día seleccionado
+    this.updateAvailableClasses();
+    this.availableSections = []; // Reiniciar secciones cuando cambie el día
+  }
+
+  onClassSelect(event: any) {
+    this.selectedClass = event.detail.value; // Asignar la clase seleccionada
+    this.updateAvailableSections();
+  }
+
+  updateAvailableClasses() {
+    this.availableClasses = Object.keys(this.clases).filter(subject => {
+      return Object.keys(this.clases[subject]).some(section => {
+        return this.clases[subject][section].includes(this.selectedDay);
+      });
+    });
+
+    // Mostrar alerta si no hay clases disponibles para el día seleccionado
+    if (this.availableClasses.length === 0) {
+      this.presentAlert();
+    }
+  }
+
+  async presentAlert() {
+    const alert = await this.alertController.create({
+      header: 'Atención',
+      message: 'Este día no posees clases.',
+      buttons: ['Aceptar']
+    });
+
+    await alert.present();
+  }
+
+  updateAvailableSections() {
+    if (this.selectedClass) {
+      this.availableSections = this.getSectionsForClassAndDay(this.selectedClass, this.selectedDay);
+    } else {
+      this.availableSections = []; // Reiniciar secciones si no hay clase seleccionada
+    }
+  }
+
+  getSectionsForClassAndDay(subject: string, day: string) {
+    const sections: string[] = [];
+    if (this.clases[subject]) {
+      for (const section in this.clases[subject]) {
+        if (this.clases[subject][section].includes(day)) {
+          sections.push(section);
+        }
+      }
+    }
+    return sections;
   }
 }

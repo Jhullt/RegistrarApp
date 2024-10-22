@@ -45,29 +45,25 @@
   <ion-content class="ion-padding">
     <ion-list>
       <ion-item>
-        <ion-select label="Día" label-placement="fixed">
-          <ion-select-option value="lunes">Lunes</ion-select-option>
-          <ion-select-option value="martes">Martes</ion-select-option>
-          <ion-select-option value="miercoles">Miércoles</ion-select-option>
-          <ion-select-option value="jueves">Jueves</ion-select-option>
-          <ion-select-option value="viernes">Viernes</ion-select-option>
-          <ion-select-option value="sabado">Sábado</ion-select-option>
+        <ion-select label="Día" label-placement="fixed" (ionChange)="onDaySelect($event)">
+          <ion-select-option value="Lunes">Lunes</ion-select-option>
+          <ion-select-option value="Martes">Martes</ion-select-option>
+          <ion-select-option value="Miercoles">Miercoles</ion-select-option>
+          <ion-select-option value="Jueves">Jueves</ion-select-option>
+          <ion-select-option value="Viernes">Viernes</ion-select-option>
+          <ion-select-option value="Sabado">Sabado</ion-select-option>
         </ion-select>
       </ion-item>
-
+      
       <ion-item>
-        <ion-select label="Clase" label-placement="fixed">
-          <ion-select-option value="arquitectura">Arquitectura</ion-select-option>
-          <ion-select-option value="estadistica">Estadística</ion-select-option>
-          <ion-select-option value="programacion">Programación</ion-select-option>
+        <ion-select label="Clase" label-placement="fixed" (ionChange)="onClassSelect($event)">
+          <ion-select-option *ngFor="let clase of availableClasses" [value]="clase">{{ clase }}</ion-select-option>
         </ion-select>
       </ion-item>
-
+      
       <ion-item>
         <ion-select label="Sesión" label-placement="fixed">
-          <ion-select-option value="003D">003D</ion-select-option>
-          <ion-select-option value="004D">004D</ion-select-option>
-          <ion-select-option value="005D">005D</ion-select-option>
+          <ion-select-option *ngFor="let section of availableSections" [value]="section">{{ section }}</ion-select-option>
         </ion-select>
       </ion-item>
     </ion-list>
@@ -75,15 +71,15 @@
     <div class="contenedor-info">
       <div class="contenedor-dato">
         <h1>Día</h1>
-        <h2>Lunes</h2>
+        <h2>{{ selectedDay }}</h2>
       </div>
       <div class="contenedor-dato">
         <h1>Clase</h1>
-        <h2>Arquitectura</h2>
+        <h2>{{ selectedClass }}</h2>
       </div>
       <div class="contenedor-dato">
         <h1>Sesión</h1>
-        <h2>003D</h2>
+        <h2>{{ availableSections.length > 0 ? availableSections[0] : '' }}</h2>
       </div>
     </div>
   </ion-content>
