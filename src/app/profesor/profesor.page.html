@@ -56,13 +56,13 @@
       </ion-item>
       
       <ion-item>
-        <ion-select label="Clase" label-placement="fixed" (ionChange)="onClassSelect($event)">
-          <ion-select-option *ngFor="let clase of availableClasses" [value]="clase">{{ clase }}</ion-select-option>
+        <ion-select label="Clase" label-placement="fixed" (ionChange)="onClassSelect($event)" [(ngModel)]="selectedClass" [disabled]="isClassSelectDisabled">
+            <ion-select-option *ngFor="let clase of availableClasses" [value]="clase">{{ clase }}</ion-select-option>
         </ion-select>
       </ion-item>
       
       <ion-item>
-        <ion-select label="Sesión" label-placement="fixed">
+        <ion-select label="Sesión" label-placement="fixed" [disabled]="availableSections.length === 0">
           <ion-select-option *ngFor="let section of availableSections" [value]="section">{{ section }}</ion-select-option>
         </ion-select>
       </ion-item>

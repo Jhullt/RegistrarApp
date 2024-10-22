@@ -30,6 +30,7 @@ export class ProfesorPage implements OnInit {
   selectedClass: string = '';
   availableClasses: string[] = [];
   availableSections: string[] = [];
+  isClassSelectDisabled: boolean = true; // Nueva propiedad para deshabilitar el select
 
   // Definición de las clases
   clases: Clases = {
@@ -53,7 +54,7 @@ export class ProfesorPage implements OnInit {
     private router: Router,
     private modalController: ModalController,
     private animCtrl: AnimationController,
-    private alertController: AlertController, // Agrega el AlertController aquí
+    private alertController: AlertController,
   ) {}
 
   ngOnInit() {
@@ -98,8 +99,26 @@ export class ProfesorPage implements OnInit {
   }
 
   async generarCodigoQR() {
+    if (!this.selectedClass || !this.selectedDay || this.availableSections.length === 0) {
+      const alert = await this.alertController.create({
+        header: 'Error',
+        message: 'Por favor, selecciona un día y una clase válidos antes de generar el código QR.',
+        buttons: ['Aceptar']
+      });
+      await alert.present();
+      return; // Salir si no hay datos válidos
+    }
+
+    const codigoQRData = {
+      clase: this.selectedClass,
+      dia: this.selectedDay,
+      seccion: this.availableSections[0] // Asumiendo que solo muestras la primera sección seleccionada
+    };
+
     try {
-      this.qrCodeData = await QRCode.toDataURL('https://steamuserimages-a.akamaihd.net/ugc/787497032232858295/A0BBC4BBF7966DB2C949BA726D85FAE24799418A/?imw=512&&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=false');
+      const qrDataString = JSON.stringify(codigoQRData); // Convertir el objeto a una cadena
+      this.qrCodeData = await QRCode.toDataURL(qrDataString);
+      
       const modal = await this.modalController.create({
         component: QrModalComponent,
         componentProps: { codigoQR: this.qrCodeData }
@@ -144,8 +163,10 @@ export class ProfesorPage implements OnInit {
 
   onDaySelect(event: any) {
     this.selectedDay = event.detail.value; // Asignar el día seleccionado
-    this.updateAvailableClasses();
-    this.availableSections = []; // Reiniciar secciones cuando cambie el día
+    this.updateAvailableClasses(); // Actualizar las clases disponibles
+    this.isClassSelectDisabled = this.availableClasses.length === 0; // Habilitar/deshabilitar el select de clase
+    // Reiniciar selección de clase y secciones
+    this.resetSelections();
   }
 
   onClassSelect(event: any) {
@@ -174,6 +195,11 @@ export class ProfesorPage implements OnInit {
     });
 
     await alert.present();
+  }
+
+  resetSelections() {
+    this.selectedClass = ''; // Reiniciar la clase seleccionada
+    this.availableSections = []; // Reiniciar secciones disponibles
   }
 
   updateAvailableSections() {
