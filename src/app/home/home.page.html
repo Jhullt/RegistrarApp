@@ -40,28 +40,23 @@
       </div>
     </ion-toolbar>
   </ion-header>
+  
   <!-- CONTENIDO CENTRO -->
   <ion-content class="ion-padding">
     <div class="contenedor-body">
       <h1>Asistencias Registradas</h1>
       <div class="contenedor-historial-asistencia">
-        <!-- ASISTENCIA EJEMPLO 1 -->
-        <div class="contenedor-asistencia">
+        <!-- Historial de asistencias dinámico -->
+        <div class="contenedor-asistencia" *ngFor="let asistencia of historialAsistencia">
           <h1><ion-icon name="save-outline"></ion-icon></h1>
-          <h2>11/09/2024</h2>
-          <h3>Arquitectura</h3>
-          <h4>003D</h4>
-        </div>
-        <!-- ASISTENCIA EJEMPLO 2 -->
-        <div class="contenedor-asistencia">
-          <h1><ion-icon name="save-outline"></ion-icon></h1>
-          <h2>11/09/2024</h2>
-          <h3>Arquitectura</h3>
-          <h4>003D</h4>
+          <h2>{{ asistencia.fecha }}</h2>
+          <h3>{{ asistencia.asignatura }}</h3>
+          <h4>{{ asistencia.seccion }}</h4>
         </div>
       </div>
     </div>
   </ion-content>
+
   <ion-tabs>
     <ion-tab-bar slot="bottom">
       <ion-tab-button tab="scan-qr" (click)="scan()">

@@ -21,10 +21,12 @@
   <ion-card #card>
     <div class="contenedor-inputs">
       <div class="contenedor-input">
-        <ion-input [(ngModel)]="email" label="Correo" label-placement="floating" fill="outline" placeholder="Ingrese su correo"></ion-input>
+        <p>Correo</p>
+        <input [(ngModel)]="email" label="Correo" label-placement="fixed" fill="outline" placeholder="Ingrese su correo">
       </div>
       <div class="contenedor-input">
-        <ion-input [(ngModel)]="clave" label="Contraseña" label-placement="floating" fill="outline" placeholder="Ingrese su contraseña" type="password"></ion-input>
+        <p>Contraseña</p>
+        <input [(ngModel)]="clave" label="Contraseña" label-placement="fixed" fill="outline" placeholder="Ingrese su contraseña" type="password">
       </div>
       <div class="contenedor-button">
         <ion-button (click)="abrirRegistrarModal()">REGISTRARSE</ion-button>
@@ -84,25 +86,29 @@
           <!-- EMAIL -->
           <div class="contenedor-dato-formulario">
             <div class="contenedor-input">
-              <ion-input [(ngModel)]="email" label="Correo (Obligatorio)" label-placement="floating" fill="outline" placeholder="Introduce tu correo electronico"></ion-input>
+              <p>Correo (Obligatorio)</p>
+              <input [(ngModel)]="email" label="Correo (Obligatorio)" label-placement="floating" fill="outline" placeholder="Introduce tu correo electronico">
             </div>           
           </div>
           <!-- CONTRASEÑA -->
           <div class="contenedor-dato-formulario">
             <div class="contenedor-input">
-              <ion-input [(ngModel)]="clave" label="Contraseña (Obligatorio)" label-placement="floating" fill="outline" placeholder="Define tu contraseña de acceso"></ion-input>
+              <p>Contraseña (Obligatorio)</p>
+              <input [(ngModel)]="clave" label="Contraseña (Obligatorio)" label-placement="floating" fill="outline" placeholder="Define tu contraseña de acceso">
             </div>           
           </div>
           <!-- NOMBRE -->
           <div class="contenedor-dato-formulario">
             <div class="contenedor-input">
-              <ion-input [(ngModel)]="nombre" label="Nombre completo (Obligatorio)" label-placement="floating" fill="outline" placeholder="Introduce tu nombre completo"></ion-input>
+              <p>Nombre completo (Obligatorio)</p>
+              <input [(ngModel)]="nombre" label="Nombre completo (Obligatorio)" label-placement="floating" fill="outline" placeholder="Introduce tu nombre completo">
             </div>           
           </div>
           <!-- RUT -->
           <div class="contenedor-dato-formulario">
             <div class="contenedor-input">
-              <ion-input [(ngModel)]="rut" label="RUT (Obligatorio)" label-placement="floating" fill="outline" placeholder="Introduce tu RUT"></ion-input>
+              <p>RUT (Obligatorio)</p>
+              <input [(ngModel)]="rut" label="RUT (Obligatorio)" label-placement="floating" fill="outline" placeholder="Introduce tu RUT">
             </div>           
           </div>
           <!-- SELECTOR DE ROL -->

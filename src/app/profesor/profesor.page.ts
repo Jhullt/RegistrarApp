@@ -25,14 +25,12 @@ export class ProfesorPage implements OnInit {
 
   usuarioActual: any;
 
-  // Propiedades para manejar selecciones
   selectedDay: string = '';
   selectedClass: string = '';
   availableClasses: string[] = [];
   availableSections: string[] = [];
-  isClassSelectDisabled: boolean = true; // Nueva propiedad para deshabilitar el select
+  isClassSelectDisabled: boolean = true;
 
-  // Definición de las clases
   clases: Clases = {
     Programación: {
       "003": ['Lunes', 'Martes'],
@@ -106,17 +104,17 @@ export class ProfesorPage implements OnInit {
         buttons: ['Aceptar']
       });
       await alert.present();
-      return; // Salir si no hay datos válidos
+      return;
     }
 
     const codigoQRData = {
       clase: this.selectedClass,
       dia: this.selectedDay,
-      seccion: this.availableSections[0] // Asumiendo que solo muestras la primera sección seleccionada
+      seccion: this.availableSections[0]
     };
 
     try {
-      const qrDataString = JSON.stringify(codigoQRData); // Convertir el objeto a una cadena
+      const qrDataString = JSON.stringify(codigoQRData);
       this.qrCodeData = await QRCode.toDataURL(qrDataString);
       
       const modal = await this.modalController.create({
@@ -162,15 +160,14 @@ export class ProfesorPage implements OnInit {
   }
 
   onDaySelect(event: any) {
-    this.selectedDay = event.detail.value; // Asignar el día seleccionado
-    this.updateAvailableClasses(); // Actualizar las clases disponibles
-    this.isClassSelectDisabled = this.availableClasses.length === 0; // Habilitar/deshabilitar el select de clase
-    // Reiniciar selección de clase y secciones
+    this.selectedDay = event.detail.value;
+    this.updateAvailableClasses();
+    this.isClassSelectDisabled = this.availableClasses.length === 0;
     this.resetSelections();
   }
 
   onClassSelect(event: any) {
-    this.selectedClass = event.detail.value; // Asignar la clase seleccionada
+    this.selectedClass = event.detail.value;
     this.updateAvailableSections();
   }
 
@@ -180,8 +177,6 @@ export class ProfesorPage implements OnInit {
         return this.clases[subject][section].includes(this.selectedDay);
       });
     });
-
-    // Mostrar alerta si no hay clases disponibles para el día seleccionado
     if (this.availableClasses.length === 0) {
       this.presentAlert();
     }
@@ -198,15 +193,15 @@ export class ProfesorPage implements OnInit {
   }
 
   resetSelections() {
-    this.selectedClass = ''; // Reiniciar la clase seleccionada
-    this.availableSections = []; // Reiniciar secciones disponibles
+    this.selectedClass = '';
+    this.availableSections = [];
   }
 
   updateAvailableSections() {
     if (this.selectedClass) {
       this.availableSections = this.getSectionsForClassAndDay(this.selectedClass, this.selectedDay);
     } else {
-      this.availableSections = []; // Reiniciar secciones si no hay clase seleccionada
+      this.availableSections = [];
     }
   }
 
