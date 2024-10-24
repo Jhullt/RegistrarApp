@@ -27,6 +27,7 @@ export class ProfesorPage implements OnInit {
 
   selectedDay: string = '';
   selectedClass: string = '';
+  selectedSection: string = '';  // Variable para almacenar la sección seleccionada
   availableClasses: string[] = [];
   availableSections: string[] = [];
   isClassSelectDisabled: boolean = true;
@@ -97,10 +98,10 @@ export class ProfesorPage implements OnInit {
   }
 
   async generarCodigoQR() {
-    if (!this.selectedClass || !this.selectedDay || this.availableSections.length === 0) {
+    if (!this.selectedClass || !this.selectedDay || !this.selectedSection) {
       const alert = await this.alertController.create({
         header: 'Error',
-        message: 'Por favor, selecciona un día y una clase válidos antes de generar el código QR.',
+        message: 'Por favor, selecciona un día, una clase y una sección válidos antes de generar el código QR.',
         buttons: ['Aceptar']
       });
       await alert.present();
@@ -110,7 +111,7 @@ export class ProfesorPage implements OnInit {
     const codigoQRData = {
       clase: this.selectedClass,
       dia: this.selectedDay,
-      seccion: this.availableSections[0]
+      seccion: this.selectedSection  // Ahora se utilizará la sección seleccionada correctamente
     };
 
     try {
@@ -146,74 +147,47 @@ export class ProfesorPage implements OnInit {
     if (this.animation) {
       this.animation.stop();
       this.animacionActiva = false;
-      this.iconoNotificacion = 'mail-outline';
-
-      setTimeout(() => {
-        this.iconoNotificacion = 'mail-unread-outline';
-        this.animarNotificaciones();
-      }, 3000);
     }
   }
 
   manejarClickNotificaciones() {
+    this.iconoNotificacion = 'mail-outline';
     this.detenerAnimacion();
   }
 
   onDaySelect(event: any) {
     this.selectedDay = event.detail.value;
     this.updateAvailableClasses();
+    this.selectedClass = '';  // Reinicia la clase seleccionada
+    this.selectedSection = '';  // Reinicia la sección seleccionada
+  }
+
+  updateAvailableClasses() {
+    this.availableClasses = [];
+    for (const clase in this.clases) {
+      for (const seccion in this.clases[clase]) {
+        if (this.clases[clase][seccion].includes(this.selectedDay)) {
+          this.availableClasses.push(clase);
+          break;
+        }
+      }
+    }
     this.isClassSelectDisabled = this.availableClasses.length === 0;
-    this.resetSelections();
   }
 
   onClassSelect(event: any) {
     this.selectedClass = event.detail.value;
     this.updateAvailableSections();
-  }
-
-  updateAvailableClasses() {
-    this.availableClasses = Object.keys(this.clases).filter(subject => {
-      return Object.keys(this.clases[subject]).some(section => {
-        return this.clases[subject][section].includes(this.selectedDay);
-      });
-    });
-    if (this.availableClasses.length === 0) {
-      this.presentAlert();
-    }
-  }
-
-  async presentAlert() {
-    const alert = await this.alertController.create({
-      header: 'Atención',
-      message: 'Este día no posees clases.',
-      buttons: ['Aceptar']
-    });
-
-    await alert.present();
-  }
-
-  resetSelections() {
-    this.selectedClass = '';
-    this.availableSections = [];
+    this.selectedSection = '';  // Reinicia la sección seleccionada
   }
 
   updateAvailableSections() {
-    if (this.selectedClass) {
-      this.availableSections = this.getSectionsForClassAndDay(this.selectedClass, this.selectedDay);
+    if (this.selectedClass && this.clases[this.selectedClass]) {
+      this.availableSections = Object.keys(this.clases[this.selectedClass]).filter(section => 
+        this.clases[this.selectedClass][section].includes(this.selectedDay)
+      );
     } else {
       this.availableSections = [];
     }
-  }
-
-  getSectionsForClassAndDay(subject: string, day: string) {
-    const sections: string[] = [];
-    if (this.clases[subject]) {
-      for (const section in this.clases[subject]) {
-        if (this.clases[subject][section].includes(day)) {
-          sections.push(section);
-        }
-      }
-    }
-    return sections;
   }
 }

@@ -62,7 +62,7 @@
       </ion-item>
       
       <ion-item>
-        <ion-select label="Sesión" label-placement="fixed" [disabled]="availableSections.length === 0">
+        <ion-select label="Sesión" label-placement="fixed" [(ngModel)]="selectedSection" [disabled]="availableSections.length === 0">
           <ion-select-option *ngFor="let section of availableSections" [value]="section">{{ section }}</ion-select-option>
         </ion-select>
       </ion-item>
@@ -79,7 +79,7 @@
       </div>
       <div class="contenedor-dato">
         <h1>Sesión</h1>
-        <h2>{{ availableSections.length > 0 ? availableSections[0] : '' }}</h2>
+        <h2>{{ selectedSection }}</h2>
       </div>
     </div>
   </ion-content>

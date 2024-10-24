@@ -149,11 +149,17 @@ ion-header {
     margin-bottom: 5px;
     text-shadow: 1px 1px rgb(137 184 184)
   }
+
+  h1{
+    color: var(--letra);
+    font-size: 15px;
+    font-family: 'Open Sans', sans-serif;
+  }
 }
 
 .modal-registrar-formulario {
   margin-top: 40px;
-  height: 100%;
+  height: fit-content;
   justify-content: space-between;
 }
 
