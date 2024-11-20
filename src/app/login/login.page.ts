@@ -56,6 +56,7 @@ export class LoginPage implements OnInit {
     this.isModalOpen = isOpen;
   }
 
+  // Método para iniciar sesión
   async login() {
     const loading = await this.loadingCtrl.create({
       message: 'Cargando...',
@@ -84,11 +85,12 @@ export class LoginPage implements OnInit {
     }
   }
 
+  // Mostrar alertas en la interfaz
   async showAlert(header: string, message: string) {
     const alert = await this.alertCtrl.create({
       header: header,
       message: message,
-      buttons: [{
+      buttons: [ {
         text: 'CONTINUAR',
         cssClass: 'alerta-button-diseno'
       }],
@@ -97,26 +99,32 @@ export class LoginPage implements OnInit {
     await alert.present();
   }
 
+  // Método para restablecer la contraseña
   async resetPass() {
     const loading = await this.loadingCtrl.create({
       message: 'Cargando...',
     });
     await loading.present();
-  
+
     const usuariosGuardados = localStorage.getItem('usuarios');
     const usuarios: Usuario[] = usuariosGuardados ? JSON.parse(usuariosGuardados) : this.usuarios;
     const usuarioEncontrado = usuarios.find((u: Usuario) => u.email === this.email);
-  
+
     if (usuarioEncontrado) {
-      let nueva = Math.random().toString(36).slice(-6);
-      usuarioEncontrado.clave = nueva;
+      let nueva = Math.random().toString(36).slice(-6);  // Genera una nueva contraseña aleatoria
+      usuarioEncontrado.clave = nueva;  // Asigna la nueva contraseña
+
+      // Actualiza el localStorage con la nueva contraseña
+      localStorage.setItem('usuarios', JSON.stringify(usuarios));
+
       let body = {
         "nombre": usuarioEncontrado.nombre,
         "app": "RegistrarApp",
         "clave": nueva,
         "email": usuarioEncontrado.email
       };
-  
+
+      // Enviar correo de recuperación
       this.http.post("https://myths.cl/api/reset_password.php", body)
         .subscribe(async (data) => {
           console.log(data);
@@ -124,7 +132,7 @@ export class LoginPage implements OnInit {
           const alert = await this.alertCtrl.create({
             header: 'Éxito',
             message: 'El correo ha sido enviado con éxito.',
-            buttons: [{
+            buttons: [ {
               text: 'CONTINUAR',
               cssClass: 'alerta-button-diseno'
             }],
@@ -157,7 +165,14 @@ export class LoginPage implements OnInit {
     }
   }
 
+  // Registrar un nuevo usuario
   registrarUsuario() {
+    // Verificar si todos los campos están completos
+    if (!this.nombre || !this.email || !this.clave || !this.rol || !this.rut) {
+      this.showAlert('Alerta', 'Por favor, complete todos los campos.');
+      return;
+    }
+
     const nuevoUsuario: Usuario = {
       nombre: this.nombre,
       email: this.email,
@@ -178,14 +193,17 @@ export class LoginPage implements OnInit {
     this.showAlert('Éxito', 'Usuario registrado exitosamente.');
   }
 
+  // Abrir el modal de registro
   abrirRegistrarModal() {
     this.registrarModal = true;
   }
 
+  // Cerrar el modal de registro
   cerrarRegistrarModal() {
     this.registrarModal = false;
   }
 
+  // Limpiar los campos del formulario
   resetFields() {
     this.email = "";
     this.clave = "";
@@ -194,6 +212,7 @@ export class LoginPage implements OnInit {
     this.rut = "";
   }
 
+  // Cambiar entre temas claro y oscuro
   cambiarTema() {
     if (this.icono === "oscuro") {
       document.documentElement.style.setProperty("--cf-fondo", "#002020");
@@ -212,6 +231,7 @@ export class LoginPage implements OnInit {
     }
   }
 
+  // Configurar tema al inicio
   ngOnInit() {
     const savedTema = localStorage.getItem('tema');
     if (savedTema === 'oscuro') {
@@ -235,6 +255,7 @@ export class LoginPage implements OnInit {
       .play();
   }
 
+  // Restablecer campos al entrar en la vista
   ionViewWillEnter() {
     this.resetFields();
   }

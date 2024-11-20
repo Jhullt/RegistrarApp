@@ -6,7 +6,7 @@ import { QrModalComponent } from '../qr-modal/qr-modal.component';
 
 interface Clases {
   [key: string]: {
-    [key: string]: string[];
+    [key: string]: string[];  // Día(s) asignado(s) a cada clase
   };
 }
 
@@ -31,6 +31,8 @@ export class ProfesorPage implements OnInit {
   availableClasses: string[] = [];
   availableSections: string[] = [];
   isClassSelectDisabled: boolean = true;
+  isSectionSelectDisabled: boolean = true;  // Agregado para deshabilitar la sección
+  noClassesMessage: string = '';  // Mensaje que se mostrará si no hay clases para el día seleccionado
 
   clases: Clases = {
     Programación: {
@@ -155,39 +157,70 @@ export class ProfesorPage implements OnInit {
     this.detenerAnimacion();
   }
 
-  onDaySelect(event: any) {
+  async onDaySelect(event: any) {
     this.selectedDay = event.detail.value;
     this.updateAvailableClasses();
     this.selectedClass = '';  // Reinicia la clase seleccionada
     this.selectedSection = '';  // Reinicia la sección seleccionada
+    this.isSectionSelectDisabled = true;  // Deshabilita la selección de sección
+
+    // Si no hay clases para el día seleccionado, mostramos el modal
+    if (this.noClassesMessage) {
+      const alert = await this.alertController.create({
+        header: 'Aviso',
+        message: this.noClassesMessage,
+        buttons: ['Aceptar']
+      });
+      await alert.present();
+    }
   }
 
   updateAvailableClasses() {
     this.availableClasses = [];
+    this.noClassesMessage = '';  // Resetea el mensaje de "no hay clases"
+
     for (const clase in this.clases) {
       for (const seccion in this.clases[clase]) {
+        // Verifica si el día seleccionado está incluido en el horario de la clase
         if (this.clases[clase][seccion].includes(this.selectedDay)) {
           this.availableClasses.push(clase);
           break;
         }
       }
     }
-    this.isClassSelectDisabled = this.availableClasses.length === 0;
+
+    if (this.availableClasses.length === 0) {
+      this.noClassesMessage = 'Este día no tienes clases';
+      this.selectedClass = '';  // Limpiar la clase seleccionada si no hay clases
+      this.selectedSection = '';  // Limpiar la sección seleccionada si no hay clases
+      this.isClassSelectDisabled = true;  // Deshabilitar la selección de clase
+      this.isSectionSelectDisabled = true;  // Deshabilitar la selección de sección
+    } else {
+      this.isClassSelectDisabled = false;  // Habilitar la selección de clase
+    }
   }
 
-  onClassSelect(event: any) {
+  async onClassSelect(event: any) {
     this.selectedClass = event.detail.value;
     this.updateAvailableSections();
     this.selectedSection = '';  // Reinicia la sección seleccionada
+    this.isSectionSelectDisabled = false;  // Habilita la selección de sección
   }
 
   updateAvailableSections() {
     if (this.selectedClass && this.clases[this.selectedClass]) {
+      // Filtra las secciones solo si el día seleccionado está asignado a la clase
       this.availableSections = Object.keys(this.clases[this.selectedClass]).filter(section => 
         this.clases[this.selectedClass][section].includes(this.selectedDay)
       );
     } else {
       this.availableSections = [];
+    }
+
+    // Si no hay secciones disponibles para el día seleccionado, deshabilita la selección de sección
+    if (this.availableSections.length === 0) {
+      this.selectedSection = '';  // Limpia la sección seleccionada
+      this.isSectionSelectDisabled = true;  // Deshabilita la selección de sección
     }
   }
 }
